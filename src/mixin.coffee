@@ -1,15 +1,35 @@
 define [], ()->
-  mixin = (Class, Mixin)->
+
+  _getNewProto = (Class, mixinProto)->
     f = ->
     f.prototype = Class.prototype
     proto = new f()
-    for name, prop of Mixin.prototype
-      if Mixin.prototype.hasOwnProperty name
+    for name, prop of mixinProto
+      if mixinProto.hasOwnProperty name
         proto[name] = prop
+    proto
 
-    construct = ->
-      Class.apply @, arguments
-      Mixin.apply @, arguments
-      @
+
+  mixin = (Class, Mixin, beforeConstruct = no)->
+    haveConstructor = typeof Mixin is "function"
+    mixinProto =  if haveConstructor then Mixin.prototype else Mixin
+    proto = _getNewProto Class, mixinProto
+    if haveConstructor
+      if beforeConstruct
+        construct = ->
+          Mixin.apply @, arguments
+          Class.apply @, arguments
+          @
+      else
+        construct = ->
+          Class.apply @, arguments
+          Mixin.apply @, arguments
+          @
+    else
+      construct = ->
+        Class.apply @, arguments
+        @
     construct.prototype = proto
-    constrcut
+    # @todo test this
+    proto.constructor = construct
+    construct

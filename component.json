@@ -1,6 +1,6 @@
 {
   "name": "mixin",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "./lib",
   "author": "Vitalii [Nayjest] Stepanenko <gmail@vitaliy.in>",
   "dependencies": {
