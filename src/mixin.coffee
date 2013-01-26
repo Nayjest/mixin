@@ -1,3 +1,8 @@
+###
+mixin module
+
+@author Vitalii [Nayjest] Stepanenko <gmail@vitaliy.in>
+###
 define [], ()->
 
   _getNewProto = (Class, mixinProto)->
@@ -10,7 +15,18 @@ define [], ()->
     proto
 
 
+  _processMultiple = (Class, mixins, defaultBeforeConstruct)->
+    target = Class
+    for m in mixins
+      if m instanceof Array
+        target = mixin target, m[0], m[1]
+      else
+        target = mixin target, m, defaultBeforeConstruct
+    return target
+
   mixin = (Class, Mixin, beforeConstruct = no)->
+    if Mixin instanceof Array
+      return _processMultiple.apply @, arguments
     haveConstructor = typeof Mixin is "function"
     mixinProto =  if haveConstructor then Mixin.prototype else Mixin
     proto = _getNewProto Class, mixinProto

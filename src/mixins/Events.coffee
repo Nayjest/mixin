@@ -1,5 +1,11 @@
+###
+Class may be used as mixin or base class for classes that should support events
+
+@author Vitalii [Nayjest] Stepanenko <gmail@vitaliy.in>
+###
 define ['components/jquery/jquery'], ()->
   class EventsMixin
+
     constructor: ()->
       @eventHandlers ?= {}
 
