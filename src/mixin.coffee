@@ -46,6 +46,8 @@ define [], ()->
         Class.apply @, arguments
         @
     construct.prototype = proto
+    # support of coffeescript's "super()"
+    construct.__super__ = Class.prototype
     # @todo test this
     proto.constructor = construct
     construct
