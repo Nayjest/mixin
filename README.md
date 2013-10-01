@@ -17,7 +17,7 @@ Implements multiple inheritance via prototypes
  
  * creating mixed class don't affects on target class, it creates new one
 
-### Usage:
+### Usage
 
  NewClass = mixin( *Class*, *Mixin*, *beforeConstruct* = false )
 
